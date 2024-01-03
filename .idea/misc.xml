@@ -1,0 +1,20 @@
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/RAAndoridProject/CurrencyConversion/app/src/main/res/drawable/bg_edit_outline_border.xml" value="0.1145" />
+        <entry key="..\:/RAAndoridProject/CurrencyConversion/app/src/main/res/drawable/ic_back_arrow.xml" value="0.1145" />
+        <entry key="..\:/RAAndoridProject/CurrencyConversion/app/src/main/res/layout/activity_currency_selection.xml" value="0.16354166666666667" />
+        <entry key="..\:/RAAndoridProject/CurrencyConversion/app/src/main/res/layout/activity_home.xml" value="0.16354166666666667" />
+        <entry key="..\:/RAAndoridProject/CurrencyConversion/app/src/main/res/layout/item_currency.xml" value="0.65" />
+        <entry key="..\:/RAAndoridProject/CurrencyConversion/app/src/main/res/layout/item_currency_selection.xml" value="0.13418803418803418" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

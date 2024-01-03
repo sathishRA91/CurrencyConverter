@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="itemCurrencyModel"
+            type="com.rasathish.currencyconversion.presentation.home.CurrencyItemModel" />
+    </data>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_margin="@dimen/_10sdp"
+            android:padding="@dimen/_10sdp"
+           app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/_10sdp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+
+                <TextView
+                    android:id="@+id/Tv_Amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="@dimen/_12sdp"
+                    android:textColor="@color/hint_text_color"
+                    android:text="@{itemCurrencyModel.currencyAmount}"
+                    tools:text="225.0" />
+
+                <TextView
+                    android:id="@+id/Tv_currencyCodeName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/Tv_Amount"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/edit_text_color"
+                    android:text="@{itemCurrencyModel.currencyCode}"
+                    android:textSize="@dimen/_14sdp"
+                    tools:text="JPY" />
+
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+</layout>
