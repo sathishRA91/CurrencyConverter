@@ -32,7 +32,7 @@ class RemoteDataSourceImpl @Inject constructor(private val apiInterface: ApiInte
             if (response.isSuccessful) {
                 emit(Result.success(response.body()!!))
             } else {
-                emit(Result.failure(Throwable()))
+                emit(Result.failure(Throwable(response.message())))
             }
         }.flowOn(Dispatchers.IO)
 

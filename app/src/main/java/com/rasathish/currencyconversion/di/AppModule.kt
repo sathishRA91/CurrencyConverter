@@ -16,6 +16,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -43,6 +44,7 @@ import javax.inject.Singleton
                     chain.request().newBuilder().addHeader("apikey", BuildConfig.CURRENCY_API).build()
                 chain.proceed(request)
             })
+            .certificatePinner(CertificatePinner.Builder().add("com.rasathish.currencyconversion","sha256/${BuildConfig.CURRENCY_API}").build())
             .connectTimeout(100L, TimeUnit.SECONDS)
             .readTimeout(100L, TimeUnit.SECONDS)
             .build()

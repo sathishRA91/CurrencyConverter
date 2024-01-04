@@ -4,4 +4,9 @@
     <string name="please_select_currency">Please select currency</string>
     <string name="please_enter_currency_code">Please enter currency code</string>
     <string name="currency_convert">Currency Converter</string>
+    <string name="iban_validation">"IBAN Validation"</string>
+    <string name="validate">Validate</string>
+    <string name="proceed">Proceed</string>
+    <string name="skip">Skip</string>
+    <string name="enter_iban_number">Enter IBAN Number</string>
 </resources>

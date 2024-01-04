@@ -33,21 +33,22 @@ class HomeActivity : AppCompatActivity() {
 
 
     private lateinit var activityHomeBinding: ActivityHomeBinding
-    private  val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
     private val currencyList = ArrayList<CurrencyModel>()
     private lateinit var currencyViewAdapter: CurrencyViewAdapter
-    private var decimalFormat: NumberFormat = DecimalFormat("#0.000")
+    private var decimalFormat: NumberFormat = DecimalFormat("#0.00")
     private var currencyCode = "KWD"
     private var currencyAmount = "0.0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
         super.onCreate(savedInstanceState)
-        activityHomeBinding = DataBindingUtil.setContentView<ActivityHomeBinding?>(this, R.layout.activity_home).apply {
-            this.homeViewModel = viewModel
-            lifecycleOwner= this@HomeActivity
-            this.executePendingBindings()
-        }
+        activityHomeBinding =
+            DataBindingUtil.setContentView<ActivityHomeBinding?>(this, R.layout.activity_home)
+                .apply {
+                    this.homeViewModel = viewModel
+                    lifecycleOwner = this@HomeActivity
+                    this.executePendingBindings()
+                }
         init()
     }
 
@@ -71,13 +72,15 @@ class HomeActivity : AppCompatActivity() {
 
                         is ResultResource.Success -> {
                             activityHomeBinding.PbLoading.isVisible = false
-                            if ( result.data!= null &&  result.data.rates.size > 0) {
+                            if (result.data != null && result.data.rates.size > 0) {
                                 currencyList.addAll(result.data.rates)
-                                currencyViewAdapter = CurrencyViewAdapter(this@HomeActivity, result.data.rates)
+                                currencyViewAdapter =
+                                    CurrencyViewAdapter(this@HomeActivity, result.data.rates)
                                 activityHomeBinding.RvCurrencyView.adapter = currencyViewAdapter
 
                             }
                         }
+
                         else -> {}
                     }
                 }
@@ -98,27 +101,20 @@ class HomeActivity : AppCompatActivity() {
 
 
     private fun currencyConvert(amount: String) {
-        val currencyShowList = amount.let{value ->
-            if(value.isNotEmpty())
-            {
+        val currencyShowList = amount.let { value ->
+            if (value.isNotEmpty()) {
                 currencyList.map {
-                    val currencyConvertAmount = if (currencyCode == "KWD") {
-                        it.rate.toDouble() * amount.toDouble()
-                    } else {
-                        (it.rate.toDouble() / currencyAmount.toDouble()) * amount.toDouble()
-                    }
-                    it.apply {
-                        base=it.base
-                        rate= decimalFormat.format(currencyConvertAmount).toString()
+                    it.also { value ->
+                        value.base = it.base
+                        value.rate =
+                            decimalFormat.format(it.rate.toDouble() * amount.toDouble()).toString()
                     }
                 }
-            }
-            else
-            {
+            } else {
                 currencyList.map {
-                    it.apply {
-                        base=it.base
-                        rate= "0.0"
+                    it.also { value ->
+                        value.base = it.base
+                        value.rate = "0.0"
                     }
                 }
             }
@@ -152,10 +148,10 @@ class HomeActivity : AppCompatActivity() {
 
     private fun updateCurrencyAmount(amount: String) {
 
-        val currencyShowList =  currencyList.map {
+        val currencyShowList = currencyList.map {
             it.apply {
-                this.base=it.base
-                this.rate= decimalFormat.format(it.rate.toDouble() / amount.toDouble()).toString()
+                this.base = it.base
+                this.rate = decimalFormat.format(it.rate.toDouble() / amount.toDouble()).toString()
             }
         }
         currencyViewAdapter.updateData(currencyShowList)
