@@ -7,12 +7,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.rasathish.currencyconversion.R
 import com.rasathish.currencyconversion.databinding.ItemCurrencyBinding
-import com.rasathish.currencyconversion.presentation.home.CurrencyItemModel
+import com.rasathish.currencyconversion.domain.model.CurrencyModel
 
 /**
  * Created by sathish on 03,January,2024
  */
-class CurrencyViewAdapter(private val context: Context,private var currencyList:List<CurrencyItemModel>) :
+class CurrencyViewAdapter(private val context: Context,private var currencyList:List<CurrencyModel>) :
     RecyclerView.Adapter<CurrencyViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
@@ -40,7 +40,7 @@ class CurrencyViewAdapter(private val context: Context,private var currencyList:
     inner class ViewHolder(var itemRowBinding: ItemCurrencyBinding) :
         RecyclerView.ViewHolder(itemRowBinding.root) {}
 
-    fun updateData(currencyData:List<CurrencyItemModel>)
+    fun updateData(currencyData:List<CurrencyModel>)
     {
         this.currencyList=currencyData
         notifyDataSetChanged()

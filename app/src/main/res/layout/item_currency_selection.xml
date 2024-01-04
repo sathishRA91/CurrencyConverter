@@ -7,7 +7,7 @@
 
         <variable
             name="itemCurrencyModel"
-            type="com.rasathish.currencyconversion.presentation.currencyselection.model.CurrencySelectionModel" />
+            type="com.rasathish.currencyconversion.domain.model.CurrencyModel" />
     </data>
 
 
@@ -39,7 +39,7 @@
                     android:layout_centerInParent="true"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/edit_text_color"
-                    android:text="@{itemCurrencyModel.currencyCode+` To Base 1$ USD`}"
+                    android:text="@{itemCurrencyModel.base+` To Base 1 KWD`}"
                     android:textSize="@dimen/_14sdp"
                     tools:text="JPY To Base 1$ USD" />
 
@@ -53,7 +53,7 @@
                     android:layout_centerInParent="true"
                     android:textSize="@dimen/_12sdp"
                     android:textColor="@color/hint_text_color"
-                    android:text="@{itemCurrencyModel.currencyAmount}"
+                    android:text="@{itemCurrencyModel.rate}"
                     tools:text="225.0" />
 
 

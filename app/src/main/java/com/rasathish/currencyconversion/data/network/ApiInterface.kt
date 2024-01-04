@@ -1,19 +1,21 @@
 package com.rasathish.currencyconversion.data.network
 
-import com.google.gson.JsonObject
-import com.rasathish.currencyconversion.presentation.home.CurrencyConvertModel
+import com.rasathish.currencyconversion.constant.ApiConfig
+import com.rasathish.currencyconversion.data.model.CurrencyModelDto
+import com.rasathish.currencyconversion.data.model.IbanModelDto
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Url
+import retrofit2.http.Query
 
 /**
- * Created by sathish on 03,January,2024
+ * Created by sathish on 04,January,2024
  */
 interface ApiInterface {
 
-    @GET
-    suspend fun getCurrency(@Url urlName:String):Response<JsonObject>
+    @GET(ApiConfig.GET_CURRENCY)
+    suspend fun getCurrency(@Query("base") base:String):Response<CurrencyModelDto>
 
-    @GET
-    suspend fun getCurrencyConvert(@Url urlName: String):Response<CurrencyConvertModel>
+
+    @GET(ApiConfig.VALIDATE_IBAN)
+    suspend fun validateIban(@Query("iban_number") ibanNumber:String):Response<IbanModelDto>
 }

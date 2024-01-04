@@ -8,11 +8,11 @@ class ApiConfig {
     companion object
     {
 
-        const val DOMAIN="https://openexchangerates.org/api/"
+        const val DOMAIN="https://api.apilayer.com/"
 
-        const val GET_CURRENCY="currencies.json"
+        const val GET_CURRENCY="fixer/latest"
 
-        const val GET_CURRENCY_CONVERT= "latest.json?app_id="
+        const val VALIDATE_IBAN="bank_data/iban_validate"
 
     }
 }

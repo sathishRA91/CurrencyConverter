@@ -7,8 +7,6 @@ class AppConstant {
 
     companion object{
 
-        const val CURRENCY_PREFERENCE="currency_preference"
-
-        const val CURRENCY_EXIST="currency_exist"
+        const val BASE_CURRENCY="KWD"
     }
 }

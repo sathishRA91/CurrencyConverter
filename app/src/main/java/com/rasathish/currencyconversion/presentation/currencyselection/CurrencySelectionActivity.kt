@@ -1,45 +1,44 @@
 package com.rasathish.currencyconversion.presentation.currencyselection
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rasathish.currencyconversion.R
 import com.rasathish.currencyconversion.databinding.ActivityCurrencySelectionBinding
+import com.rasathish.currencyconversion.domain.model.CurrencyModel
 import com.rasathish.currencyconversion.presentation.currencyselection.adapter.CurrencySelectionAdapter
-import com.rasathish.currencyconversion.presentation.currencyselection.model.CurrencySelectionModel
-import com.rasathish.currencyconversion.presentation.home.CurrencyItemModel
-import com.rasathish.currencyconversion.presentation.home.adapter.CurrencyViewAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
 /**
- * Created by sathish on 03,January,2024
+ * Created by sathish on 04,January,2024
  */
 @AndroidEntryPoint
 class CurrencySelectionActivity:AppCompatActivity()
 {
 
     private lateinit var activityCurrencySelectionBinding:ActivityCurrencySelectionBinding
-    private lateinit var currencySelectionViewModel: CurrencySelectionViewModel
+    private val viewModel: CurrencySelectionViewModel by viewModels()
     private lateinit var currencySelectionAdapter: CurrencySelectionAdapter
-    private val currencyList = ArrayList<CurrencySelectionModel>()
+    private val currencyList = ArrayList<CurrencyModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityCurrencySelectionBinding=DataBindingUtil.setContentView(this, R.layout.activity_currency_selection)
-        currencySelectionViewModel=ViewModelProvider(this)[CurrencySelectionViewModel::class.java]
-        activityCurrencySelectionBinding.currencySelectionModel=currencySelectionViewModel
-        activityCurrencySelectionBinding.lifecycleOwner=this
-        activityCurrencySelectionBinding.executePendingBindings()
-
+        activityCurrencySelectionBinding=DataBindingUtil.setContentView<ActivityCurrencySelectionBinding?>(this, R.layout.activity_currency_selection).apply {
+            currencySelectionModel = viewModel
+            lifecycleOwner=this@CurrencySelectionActivity
+            executePendingBindings()
+        }
         initCurrencySelection()
     }
 
@@ -47,16 +46,18 @@ class CurrencySelectionActivity:AppCompatActivity()
     {
         activityCurrencySelectionBinding.RvCurrencySelectionView.layoutManager = LinearLayoutManager(this)
 
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED)
+            {
+                viewModel.getCurrencyList.collectLatest {
 
-            currencySelectionViewModel.getCurrencyList.collectLatest {
+                    if (it != null && it.size > 0) {
+                        currencyList.addAll(it)
+                        currencySelectionAdapter = CurrencySelectionAdapter(this@CurrencySelectionActivity, currencyList)
+                        activityCurrencySelectionBinding.RvCurrencySelectionView.adapter = currencySelectionAdapter
+                    }
 
-                if (it != null && it.size > 0) {
-                    currencyList.addAll(it)
-                    currencySelectionAdapter = CurrencySelectionAdapter(this@CurrencySelectionActivity, currencyList)
-                    activityCurrencySelectionBinding.RvCurrencySelectionView.adapter = currencySelectionAdapter
                 }
-
             }
         }
 
@@ -72,10 +73,17 @@ class CurrencySelectionActivity:AppCompatActivity()
 
     private fun currencyFilter(searchKey:String)
     {
-      val currencySearchList = currencyList.map { it }.filter {
-            it.currencyCode.lowercase(Locale.ENGLISH).contains(searchKey.lowercase(Locale.getDefault()))
+        if(searchKey.isNotEmpty())
+        {
+            val currencySearchList = currencyList.map { it }.filter {
+                it.base.lowercase(Locale.ENGLISH).contains(searchKey.lowercase(Locale.getDefault()))
+            }
+
+            if(currencySearchList.isNotEmpty())
+            {
+                currencySelectionAdapter.updateData(currencySearchList)
+            }
         }
 
-        currencySelectionAdapter.updateData(currencySearchList)
     }
 }

@@ -5,7 +5,7 @@
 
         <variable
             name="itemCurrencyModel"
-            type="com.rasathish.currencyconversion.presentation.home.CurrencyItemModel" />
+            type="com.rasathish.currencyconversion.domain.model.CurrencyModel" />
     </data>
 
 
@@ -37,7 +37,7 @@
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="@dimen/_12sdp"
                     android:textColor="@color/hint_text_color"
-                    android:text="@{itemCurrencyModel.currencyAmount}"
+                    android:text="@{itemCurrencyModel.rate}"
                     tools:text="225.0" />
 
                 <TextView
@@ -47,7 +47,7 @@
                     android:layout_below="@+id/Tv_Amount"
                     android:fontFamily="@font/poppins_bold"
                     android:textColor="@color/edit_text_color"
-                    android:text="@{itemCurrencyModel.currencyCode}"
+                    android:text="@{itemCurrencyModel.base}"
                     android:textSize="@dimen/_14sdp"
                     tools:text="JPY" />
 
